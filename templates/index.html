@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Recognition Upload</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 60px;
+            max-width: 600px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .file-input {
+            margin: 20px 0;
+        }
+        .btn-upload {
+            margin-top: 10px;
+        }
+        .preview-img {
+            display: none;
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="mb-4">Upload an Image for Recognition</h2>
+        <form action="/predict" method="post" enctype="multipart/form-data">
+            <div class="custom-file file-input">
+                <input type="file" class="custom-file-input" id="imageInput" name="image" accept="image/*" required>
+                <label class="custom-file-label" for="imageInput">Choose image...</label>
+            </div>
+            <img id="preview" class="preview-img" alt="Preview">
+            <button type="submit" class="btn btn-primary btn-upload">Upload & Predict</button>
+        </form>
+    </div>
+
+    <script>
+        // Bootstrap file input label update
+        document.getElementById("imageInput").addEventListener("change", function(e) {
+            const fileName = e.target.files[0] ? e.target.files[0].name : "Choose image...";
+            e.target.nextElementSibling.innerText = fileName;
+
+            // Show preview
+            const preview = document.getElementById("preview");
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    preview.src = event.target.result;
+                    preview.style.display = "block";
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>

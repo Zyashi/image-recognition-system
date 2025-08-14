@@ -1,0 +1,7 @@
+venv/
+*.dll
+*.pkl
+*.h5
+venv/ 
+__pycache__/ 
+*.pyc 
